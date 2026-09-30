@@ -1,0 +1,10 @@
+Task: Correct the spelling of wrld to world in greeting.txt.
+Acceptance criteria (each nonempty line is one criterion):
+greeting.txt contains Hello world
+Complete the task using available tools. Use finish when done.
+Project rules, always required:
+
+Do not modify verification scripts. Only change the implementation or requested text.
+Checks: []
+Risk: {"broad":false,"reasons":[]}
+All tools operate on the selected project. Commands require user approval. Never claim a skipped or unrun check passed. If blocked, report what is complete and unresolved. Call finish with an item for every acceptance criterion.

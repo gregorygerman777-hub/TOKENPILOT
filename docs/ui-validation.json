@@ -1,0 +1,30 @@
+[
+  {
+    "width": 375,
+    "overflow": 0,
+    "emDash": false,
+    "spacing": [],
+    "smallTargets": []
+  },
+  {
+    "width": 768,
+    "overflow": 0,
+    "emDash": false,
+    "spacing": [],
+    "smallTargets": []
+  },
+  {
+    "width": 1024,
+    "overflow": 0,
+    "emDash": false,
+    "spacing": [],
+    "smallTargets": []
+  },
+  {
+    "width": 1440,
+    "overflow": 0,
+    "emDash": false,
+    "spacing": [],
+    "smallTargets": []
+  }
+]

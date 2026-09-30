@@ -1,0 +1,18 @@
+{
+  "enabled": {
+    "runs": 8,
+    "correctCompleted": 8,
+    "totalTokens": 213133,
+    "tokensPerCorrectCompletion": null,
+    "allUsageReported": false,
+    "note": "Partial reported tokens only. Missing usage prevents a total-consumption comparison."
+  },
+  "disabled": {
+    "runs": 8,
+    "correctCompleted": 8,
+    "totalTokens": 403288,
+    "tokensPerCorrectCompletion": null,
+    "allUsageReported": false,
+    "note": "Partial reported tokens only. Missing usage prevents a total-consumption comparison."
+  }
+}

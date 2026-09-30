@@ -1,0 +1,11 @@
+Task: Fix the public API parseCount to reject negative numbers, fractional values and non-numbers with TypeError. Preserve valid nonnegative integers. This public interface needs all project validation.
+Acceptance criteria (each nonempty line is one criterion):
+parseCount rejects invalid values with TypeError and accepts nonnegative integers
+All configured verification checks pass
+Complete the task using available tools. Use finish when done.
+Project rules, always required:
+
+Do not modify verification scripts. Only change the implementation or requested text.
+Checks: [{"id":"check.cjs","command":["/usr/local/bin/node","check.cjs"],"required":true},{"id":"integration.cjs","command":["/usr/local/bin/node","integration.cjs"],"required":true}]
+Risk: {"broad":true,"reasons":["public api"]}
+All tools operate on the selected project. Commands require user approval. Never claim a skipped or unrun check passed. If blocked, report what is complete and unresolved. Call finish with an item for every acceptance criterion.

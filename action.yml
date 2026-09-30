@@ -1,0 +1,32 @@
+name: TokenPilot evidence gate
+description: Scan local source, gate new findings, and produce HTML, JSON and SARIF evidence. Requires installed Semgrep and Gitleaks.
+inputs:
+  project:
+    description: Absolute path to the repository to scan
+    required: true
+  baseline:
+    description: Optional reviewed TokenPilot evidence.json baseline
+    required: false
+  output:
+    description: New evidence directory outside the scanned source
+    required: true
+outputs:
+  evidence:
+    description: Evidence directory
+    value: ${{ inputs.output }}
+runs:
+  using: composite
+  steps:
+    - name: Scan and evaluate policy
+      shell: bash
+      env:
+        PILOT_PROJECT: ${{ inputs.project }}
+        PILOT_BASELINE: ${{ inputs.baseline }}
+        PILOT_OUTPUT: ${{ inputs.output }}
+        PILOT_ACTION: ${{ github.action_path }}
+      run: |
+        args=(ci "$PILOT_PROJECT" --output "$PILOT_OUTPUT")
+        if [[ -n "$PILOT_BASELINE" ]]; then
+          args+=(--baseline "$PILOT_BASELINE")
+        fi
+        node "$PILOT_ACTION/src/cli.cjs" "${args[@]}"

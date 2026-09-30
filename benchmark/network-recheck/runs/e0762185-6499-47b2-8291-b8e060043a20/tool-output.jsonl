@@ -1,0 +1,2 @@
+{"time":1790643718580,"tool":"discover","args":{"prefix":""},"output":"check.cjs\nindex.cjs\ntokenpilot.json"}
+{"time":1790643720145,"tool":"read","args":{"path":"index.cjs","start":1,"lines":120},"output":"1: exports.average = xs => xs.reduce((a,b)=>a+b,0) / (xs.length + 1);\n2: "}

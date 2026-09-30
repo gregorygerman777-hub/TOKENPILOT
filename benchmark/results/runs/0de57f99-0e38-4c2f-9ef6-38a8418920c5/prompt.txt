@@ -1,0 +1,10 @@
+Task: Fix the regression: average([2,4]) returns 2 instead of 3. Empty arrays should return 0. Run the regression check.
+Acceptance criteria (each nonempty line is one criterion):
+average returns the arithmetic mean and returns 0 for an empty array
+Work with the smallest complete change. Search narrowly, read relevant sections, avoid speculative refactors. Reuse evidence already in this session. Do not repeat failed actions without a new hypothesis. Use verify for checks; finish when acceptance is satisfied. Available tool call limit: 36.
+Project rules, always required:
+
+Do not modify verification scripts. Only change the implementation or requested text.
+Checks: [{"id":"check.cjs","command":["/usr/local/bin/node","check.cjs"],"required":true}]
+Risk: {"broad":false,"reasons":[]}
+All tools operate on the selected project. Commands require user approval. Never claim a skipped or unrun check passed. If blocked, report what is complete and unresolved. Call finish with an item for every acceptance criterion.

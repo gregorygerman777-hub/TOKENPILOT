@@ -1,0 +1,72 @@
+{
+  "name": "tokenpilot",
+  "version": "1.2.0",
+  "description": "Local desktop controller for economical coding-agent work",
+  "main": "src/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.cjs",
+    "benchmark": "node benchmark/run.cjs",
+    "test:ui": "node test/ui.cjs",
+    "dist": "electron-builder --mac dmg zip --arm64",
+    "scan": "node src/cli.cjs scan",
+    "doctor": "node src/cli.cjs doctor",
+    "web": "node src/cli.cjs serve",
+    "demo": "node src/cli.cjs demo"
+  },
+  "keywords": [],
+  "author": "TokenPilot",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "electron": "^44.4.5",
+    "electron-builder": "^26.15.3",
+    "playwright": "^1.63.0"
+  },
+  "build": {
+    "appId": "local.tokenpilot.desktop",
+    "productName": "TokenPilot",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "ui/**/*",
+      "package.json",
+      "demo/**/*",
+      "web/**/*"
+    ],
+    "asar": true,
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "identity": null,
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "docs/icon.icns"
+    },
+    "dmg": {
+      "title": "TokenPilot",
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    }
+  },
+  "bin": {
+    "tokenpilot": "src/cli.cjs"
+  }
+}

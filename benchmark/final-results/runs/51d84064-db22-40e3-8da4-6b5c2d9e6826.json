@@ -1,0 +1,214 @@
+{
+  "id": "51d84064-db22-40e3-8da4-6b5c2d9e6826",
+  "root": "/private/var/folders/88/dzxy5h0n6nqdjjjnzl9rgvf40000gn/T/tokenpilot-bench-GANiqg",
+  "task": "Correct the spelling of wrld to world in greeting.txt.",
+  "criteria": "greeting.txt contains Hello world",
+  "policy": {
+    "calls": 36,
+    "repeats": 2,
+    "lines": 160,
+    "chars": 10000,
+    "minutes": 3,
+    "mode": "economy",
+    "model": "sonnet",
+    "effort": "low",
+    "spend": 0.6,
+    "tokens": 200000,
+    "optionalChecks": 2,
+    "autoEscalate": false
+  },
+  "controller": false,
+  "started": 1790639405831,
+  "status": "completed",
+  "events": [
+    {
+      "time": 1790639405836,
+      "type": "policy",
+      "data": {
+        "message": "Start with focused work and conservative required checks",
+        "policy": {
+          "calls": 36,
+          "repeats": 2,
+          "lines": 160,
+          "chars": 10000,
+          "minutes": 3,
+          "mode": "economy",
+          "model": "sonnet",
+          "effort": "low",
+          "spend": 0.6,
+          "tokens": 200000,
+          "optionalChecks": 2,
+          "autoEscalate": false
+        }
+      }
+    },
+    {
+      "time": 1790639408910,
+      "type": "activity",
+      "data": {
+        "name": "read",
+        "args": {
+          "path": "greeting.txt",
+          "start": 1,
+          "lines": 120
+        }
+      }
+    },
+    {
+      "time": 1790639410317,
+      "type": "activity",
+      "data": {
+        "name": "edit",
+        "args": {
+          "path": "greeting.txt"
+        }
+      }
+    },
+    {
+      "time": 1790639412226,
+      "type": "activity",
+      "data": {
+        "name": "finish",
+        "args": {
+          "summary": "Fixed spelling in greeting.txt from 'wrld' to 'world'.",
+          "acceptance": [
+            {
+              "criterion": "greeting.txt contains Hello world",
+              "satisfied": true,
+              "evidence": "Edited file; line now reads 'Hello world'"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "time": 1790639412407,
+      "type": "accepted",
+      "data": {
+        "summary": "Fixed spelling in greeting.txt from 'wrld' to 'world'.",
+        "acceptance": [
+          {
+            "criterion": "greeting.txt contains Hello world",
+            "satisfied": true,
+            "evidence": "Edited file; line now reads 'Hello world'"
+          }
+        ]
+      }
+    },
+    {
+      "time": 1790639415614,
+      "type": "agent",
+      "data": "Done — greeting.txt now reads \"Hello world\"."
+    },
+    {
+      "time": 1790639415669,
+      "type": "result",
+      "data": "Done — greeting.txt now reads \"Hello world\"."
+    }
+  ],
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 6689,
+    "cache_read_input_tokens": 39312,
+    "output_tokens": 368,
+    "output_tokens_details": {
+      "thinking_tokens": 12
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6689,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 20,
+        "cache_read_input_tokens": 11587,
+        "cache_creation_input_tokens": 271,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 271
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard"
+  },
+  "reportedCost": 0.038314400000000005,
+  "sessionId": "161af75e-e2bc-4b20-b209-384875e23fd8",
+  "checks": [],
+  "initialChanges": {
+    "status": "",
+    "diff": "",
+    "untracked": []
+  },
+  "changes": {
+    "status": " M greeting.txt\n",
+    "diff": "diff --git a/greeting.txt b/greeting.txt\nindex 80ed33d..802992c 100644\n--- a/greeting.txt\n+++ b/greeting.txt\n@@ -1 +1 @@\n-Hello wrld\n+Hello world\n",
+    "untracked": []
+  },
+  "acceptance": [
+    {
+      "criterion": "greeting.txt contains Hello world",
+      "satisfied": true,
+      "evidence": "Edited file; line now reads 'Hello world'"
+    }
+  ],
+  "risk": {
+    "broad": false,
+    "reasons": []
+  },
+  "model": "claude-sonnet-5",
+  "effort": "low",
+  "metrics": {
+    "toolCalls": 3,
+    "duplicateReads": 0,
+    "blockedActions": 0,
+    "retries": 0,
+    "localModelTokens": 0
+  },
+  "resumedFrom": null,
+  "integration": [
+    {
+      "name": "tokenpilot",
+      "status": "connected",
+      "source": "dynamic"
+    }
+  ],
+  "partialUsage": {
+    "input_tokens": 8,
+    "output_tokens": 73,
+    "cache_creation_input_tokens": 6689,
+    "cache_read_input_tokens": 39312
+  },
+  "result": "Done — greeting.txt now reads \"Hello world\".",
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 8,
+      "outputTokens": 368,
+      "cacheReadInputTokens": 39312,
+      "cacheCreationInputTokens": 6689,
+      "webSearchRequests": 0,
+      "costUSD": 0.038314400000000005,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 12,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "providerResult": "success",
+  "permissionDenials": [],
+  "ended": 1790639416110,
+  "elapsedMs": 10279,
+  "controllerCpuMs": 56.846,
+  "exitCode": 0,
+  "signal": null,
+  "accounting": "Provider-reported categories; cost is a CLI estimate, not subscription consumption."
+}

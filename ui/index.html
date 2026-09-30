@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'"
+    />
+    <title>TokenPilot</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <aside>
+      <div class="brand">
+        <span class="mark">T<span>↗</span></span
+        ><b>TokenPilot</b>
+      </div>
+      <div class="eyebrow">WORKSPACE</div>
+      <button id="choose" class="btn project">
+        Select project <span>＋</span></button
+      ><select id="recent" aria-label="Recent projects">
+        <option value="">Recent projects</option>
+      </select>
+      <div id="projectPath" class="muted path">Choose a folder to begin.</div>
+      <nav aria-label="Main navigation">
+        <button class="nav active" data-page="workspace">Workspace</button
+        ><button class="nav" data-page="security">Security lab</button
+        ><button class="nav" data-page="history">Task history</button
+        ><button class="nav" data-page="settings">Project rules</button
+        ><button class="nav" data-page="connection">Agent connection</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <span class="status-dot"></span> LOCAL BY DEFAULT
+        <p>
+          Your files stay here. Agent requests go to your connected provider.
+        </p>
+      </div>
+    </aside>
+    <main>
+      <header>
+        <div class="eyebrow">LESS WASTE. COMPLETE WORK.</div>
+        <div id="connectionLabel">Checking Claude Code…</div>
+      </header>
+      <div id="error" role="alert" hidden></div>
+      <section id="workspace" class="page">
+        <div class="title-row">
+          <div>
+            <h1>Less guessing.<br />More evidence.</h1>
+            <p class="muted">
+              Focused agents. Local checks. Work you can inspect.
+            </p>
+          </div>
+          <span id="taskStatus" class="status">Ready</span>
+        </div>
+        <div class="work-layout">
+          <form id="composer" class="panel">
+            <div class="section-label"><span>01</span> THE TASK</div>
+            <label for="task">What needs to change?</label
+            ><textarea
+              id="task"
+              rows="4"
+              placeholder="Fix the empty-state message in the project list."
+              required
+            ></textarea
+            ><label for="criteria"
+              >Done means
+              <small>One acceptance criterion per line</small></label
+            ><textarea
+              id="criteria"
+              rows="2"
+              placeholder="The project list shows a helpful message when empty."
+              required
+            ></textarea>
+            <div id="securityScope" class="note" hidden>
+              Security verification is attached to this task. Existing tests and
+              check configuration are protected.
+              <button id="clearScope" class="btn subtle" type="button">
+                Remove security gate
+              </button>
+            </div>
+            <div class="section-label"><span>02</span> WORK BOUNDARIES</div>
+            <div class="modes" role="group" aria-label="Efficiency mode">
+              <button type="button" class="mode selected" data-mode="economy">
+                Economy<small>Focused by default</small></button
+              ><button type="button" class="mode" data-mode="balanced">
+                Balanced<small>Room to explore</small></button
+              ><button type="button" class="mode" data-mode="deep">
+                Deep Work<small>Harder problems</small>
+              </button>
+            </div>
+            <div class="fields">
+              <label
+                >Spend ceiling, USD<input
+                  id="spend"
+                  type="number"
+                  value="2"
+                  min="0.01"
+                  step="0.01"
+                  required /></label
+              ><label
+                >Time, minutes<input
+                  id="minutes"
+                  type="number"
+                  value="10"
+                  min="1"
+                  max="240"
+                  required
+              /></label>
+            </div>
+            <details>
+              <summary>Token and model controls</summary>
+              <div class="fields">
+                <label
+                  >Reported token threshold<input
+                    id="tokens"
+                    type="number"
+                    value="100000"
+                    min="100" /></label
+                ><label>Model<input id="model" value="sonnet" /></label
+                ><label
+                  >Retry / repeat limit<input
+                    id="repeats"
+                    type="number"
+                    value="2"
+                    min="1"
+                    max="10" /></label
+                ><label
+                  >Optional checks<input
+                    id="optionalChecks"
+                    type="number"
+                    value="2"
+                    min="0"
+                /></label>
+              </div>
+              <label class="check"
+                ><input id="autoEscalate" type="checkbox" /> Allow escalation
+                requests within the remaining budget</label
+              >
+            </details>
+            <p class="note">
+              Spend and token stops use delayed provider accounting and can
+              overshoot. Time and tool access are controlled locally. Existing
+              project files may be edited.
+            </p>
+            <div class="actions">
+              <button id="run" class="btn primary" type="submit">
+                Run task <span>↗</span></button
+              ><button id="stop" class="btn danger" type="button" disabled>
+                Stop
+              </button>
+            </div>
+          </form>
+          <div class="run-column">
+            <div class="run-heading">
+              <div class="section-label"><span>03</span> LIVE WORK</div>
+              <button id="taskReport" class="btn subtle" disabled>
+                Export report</button
+              ><button id="logs" class="btn subtle" disabled>Open logs</button>
+            </div>
+            <div class="tabs" role="tablist">
+              <button class="tab active" data-tab="activity">Activity</button
+              ><button class="tab" data-tab="changes">Changes</button
+              ><button class="tab" data-tab="verification">Verification</button
+              ><button class="tab" data-tab="usage">Usage</button>
+            </div>
+            <div id="runContent" aria-live="polite">
+              <div class="empty">
+                <div class="route"><i></i><i></i><i></i></div>
+                <h2>A clear path to done.</h2>
+                <p>
+                  Meaningful actions, verification, and reported consumption
+                  will appear here when you start.
+                </p>
+                <ul>
+                  <li>Search only what matters</li>
+                  <li>Block repeated work</li>
+                  <li>Stop at the agreed outcome</li>
+                </ul>
+              </div>
+            </div>
+            <div id="recovery" class="actions" hidden>
+              <button id="resume" class="btn">Resume session</button
+              ><button id="escalate" class="btn">
+                Continue with higher effort
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="security" class="page" hidden>
+        <div class="title-row">
+          <div>
+            <div class="eyebrow">DETERMINISTIC FIRST / AI WHEN NEEDED</div>
+            <h1>Find it. Fix it.<br />Show the evidence.</h1>
+            <p class="muted">
+              Run local scanners before spending a single model token.
+            </p>
+          </div>
+          <span class="status" id="scanStatus">Ready</span>
+        </div>
+        <div class="lab-strip">
+          <div><b>01 / Snapshot</b><span>Capture the source</span></div>
+          <div><b>02 / Detect</b><span>Semgrep + Gitleaks</span></div>
+          <div><b>03 / Repair</b><span>Budgeted Claude session</span></div>
+          <div><b>04 / Compare</b><span>Show what changed</span></div>
+        </div>
+        <div id="scannerStatus" class="tool-status"></div>
+        <div class="actions scan-actions">
+          <button id="scan" class="btn primary">Scan project ↗</button
+          ><button id="web" class="btn">Open browser workbench ↗</button
+          ><button id="demo" class="btn">Try sample project</button
+          ><button id="scanStop" class="btn danger" disabled>Stop scan</button
+          ><button id="rescan" class="btn" disabled>Compare changes</button
+          ><button id="auditReport" class="btn" disabled>
+            Export evidence
+          </button>
+        </div>
+        <div class="lab-columns">
+          <div>
+            <div id="scanSummary" class="scan-summary">
+              <h2>Start with what is real.</h2>
+              <p>
+                Choose a project and run a local scan. No model account is
+                needed. Findings are grouped by rule and file so you can review
+                related locations together.
+              </p>
+            </div>
+            <div id="findings"></div>
+          </div>
+          <div class="lab-side">
+            <div class="section-label">EVIDENCE STANDARD</div>
+            <h2>A quieter scanner<br />is only one signal.</h2>
+            <p>
+              Static findings, scanner clearance, and behavioral verification
+              have separate states. Nothing gets called verified because an
+              agent says so.
+            </p>
+            <div class="data-row">
+              <span>Scanner model usage</span><b>0 tokens</b>
+            </div>
+            <div class="data-row">
+              <span>AI Challenger</span><b>Not implemented</b>
+            </div>
+            <p class="note">
+              Optional Docker probes run a frozen script against both snapshots.
+              Docker and a local image must be available. Configure a proof in
+              Project rules.
+            </p>
+            <h2>Recent scans</h2>
+            <div id="auditHistory"></div>
+          </div>
+        </div>
+      </section>
+      <section id="history" class="page" hidden>
+        <h1>Task history</h1>
+        <p class="muted">Results and full logs are saved on this Mac.</p>
+        <div id="historyList"></div>
+      </section>
+      <section id="settings" class="page" hidden>
+        <h1>Project rules</h1>
+        <p class="muted">
+          Required checks always run. Define optional checks with affected path
+          prefixes. Saving writes tokenpilot.json into the selected project.
+        </p>
+        <label for="config">Rules and verification commands</label
+        ><textarea
+          id="config"
+          class="code"
+          rows="22"
+          spellcheck="false"
+        ></textarea
+        ><button id="saveConfig" class="btn primary">Save project rules</button>
+        <p class="note">
+          Command arrays run locally in your project. Only enable caching for
+          deterministic checks whose inputs are closed and have no external
+          mutable dependencies. Cached checks fingerprint all project files,
+          dependencies, command arguments, runtime, and environment.
+        </p>
+      </section>
+      <section id="connection" class="page" hidden>
+        <h1>Agent connection</h1>
+        <div class="panel">
+          <h2>Claude Code</h2>
+          <p id="connectionDetail"></p>
+          <div class="actions">
+            <button id="login" class="btn primary">Sign in with Claude</button
+            ><button id="refresh" class="btn">Refresh status</button>
+          </div>
+          <p class="note">
+            Authentication is handled by the official Claude CLI. TokenPilot
+            does not collect passwords or copy credentials. Install Claude Code
+            separately if it is missing.
+          </p>
+          <div id="capabilities"></div>
+        </div>
+        <div class="data-row"><b>Codex</b><span>Not implemented</span></div>
+        <div class="data-row"><b>Gemini</b><span>Not implemented</span></div>
+        <p class="muted">
+          TokenPilot controls only the sessions it launches. Other agent windows
+          are unaffected.
+        </p>
+      </section>
+    </main>
+    <dialog id="approval">
+      <form method="dialog">
+        <div class="eyebrow">YOUR DECISION</div>
+        <h2 id="approvalTitle">Review requested action</h2>
+        <p id="approvalReason"></p>
+        <pre id="approvalCommand"></pre>
+        <p class="note">
+          An approved command can access the same files and network as your
+          account. Review the exact command before allowing it.
+        </p>
+        <div class="actions">
+          <button class="btn" value="deny">Deny</button
+          ><button class="btn primary" value="allow">Allow once</button>
+        </div>
+      </form>
+    </dialog>
+    <script src="app.js"></script>
+  </body>
+</html>

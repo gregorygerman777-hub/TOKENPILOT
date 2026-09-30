@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TokenPilot / Local workbench</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23152a23'/%3E%3Ctext x='8' y='25' fill='%23ddea9a' font-size='26'%3ET%3C/text%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <header>
+      <a href="/" class="brand">TokenPilot <span id="version"></span></a
+      ><span id="connection" role="status">Connecting to this Mac…</span>
+    </header>
+    <main>
+      <div class="intro">
+        <div>
+          <p class="label">LOCAL WORKBENCH / REAL SCANNER RESULTS</p>
+          <h1>Your code.<br />Your evidence.</h1>
+        </div>
+        <p>
+          Run Semgrep and Gitleaks against a folder on this Mac. Capture a
+          baseline, change the code, then compare. No model calls.
+        </p>
+      </div>
+      <section class="panel project">
+        <div class="toolbar">
+          <h2>Scan files or a project</h2>
+          <button id="sample" class="btn">Use sample project</button>
+        </div>
+        <div class="actions">
+          <button id="choose-files" class="btn">Choose files</button
+          ><button id="choose-folder" class="btn">Choose folder</button
+          ><input id="files" type="file" multiple hidden /><input
+            id="folder"
+            type="file"
+            webkitdirectory
+            multiple
+            hidden
+          />
+        </div>
+        <label for="root">Absolute file or folder path</label>
+        <div class="path-row">
+          <input
+            id="root"
+            placeholder="/Users/you/Projects/my-app"
+            autocomplete="off"
+            spellcheck="false"
+          /><button class="btn primary" id="scan">Scan ↗</button
+          ><button class="btn" id="stop" disabled>Stop</button>
+        </div>
+        <p class="hint">
+          Choose files or a folder, or paste a path to scan source in place.
+          Browser-selected files are copied to private local storage. No source
+          is uploaded to a hosted service.
+        </p>
+        <div id="capabilities" class="capabilities">
+          Checking local scanners…
+        </div>
+        <p id="error" role="alert" hidden></p>
+      </section>
+      <div class="workspace">
+        <section class="results">
+          <div class="toolbar">
+            <div>
+              <p class="label">LATEST EVIDENCE</p>
+              <h2 id="result-title">Ready when you are.</h2>
+            </div>
+            <span id="status" class="status">No scan selected</span>
+          </div>
+          <p id="progress" aria-live="polite"></p>
+          <div id="summary" class="summary" hidden></div>
+          <div id="actions" class="actions" hidden>
+            <button class="btn primary" id="compare">
+              Compare current folder</button
+            ><button class="btn" data-download="report">HTML report ↓</button
+            ><button class="btn" data-download="sarif">SARIF ↓</button
+            ><button class="btn" data-download="json">Baseline JSON ↓</button>
+          </div>
+          <div id="findings" class="findings">
+            <div class="empty">
+              <span>01 → 02 → 03</span>
+              <h3>Snapshot. Scan. Compare.</h3>
+              <p>
+                Start with a local project. The included sample should produce
+                two static findings when both scanners are installed.
+              </p>
+            </div>
+          </div>
+        </section>
+        <aside>
+          <div class="toolbar">
+            <h2>Scan history</h2>
+            <button class="btn" id="refresh" aria-label="Refresh scan history">
+              ↻
+            </button>
+          </div>
+          <div id="history">
+            <p class="hint">Your scan history will appear here.</p>
+          </div>
+          <div class="boundary">
+            <p class="label">WHAT A RESULT MEANS</p>
+            <p>
+              A static finding needs review. Scanner-cleared means the rules
+              stopped matching, not that an exploit was reproduced.
+            </p>
+            <p>
+              This interface runs locally. Exported reports can contain file
+              names and finding text; review before sharing.
+            </p>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <footer>
+      Semgrep + Gitleaks · Local snapshots · Zero model tokens for scanning
+      <span>TokenPilot local server</span>
+    </footer>
+  </body>
+</html>

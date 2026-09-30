@@ -1,0 +1,138 @@
+{
+  "id": "75af8aaf-fe15-4de2-928a-18e9e497a38b",
+  "root": "/private/var/folders/88/dzxy5h0n6nqdjjjnzl9rgvf40000gn/T/tokenpilot-bench-wJvPWN",
+  "task": "Fix the regression: average([2,4]) returns 2 instead of 3. Empty arrays should return 0. Run the regression check.",
+  "criteria": "average returns the arithmetic mean and returns 0 for an empty array",
+  "policy": {
+    "calls": 36,
+    "repeats": 2,
+    "lines": 160,
+    "chars": 10000,
+    "minutes": 3,
+    "mode": "economy",
+    "model": "sonnet",
+    "effort": "low",
+    "spend": 0.6,
+    "tokens": 200000,
+    "optionalChecks": 2,
+    "autoEscalate": false
+  },
+  "controller": true,
+  "started": 1790640649528,
+  "status": "blocked",
+  "events": [
+    {
+      "time": 1790640649528,
+      "type": "policy",
+      "data": {
+        "message": "Start with focused work and conservative required checks",
+        "policy": {
+          "calls": 36,
+          "repeats": 2,
+          "lines": 160,
+          "chars": 10000,
+          "minutes": 3,
+          "mode": "economy",
+          "model": "sonnet",
+          "effort": "low",
+          "spend": 0.6,
+          "tokens": 200000,
+          "optionalChecks": 2,
+          "autoEscalate": false
+        }
+      }
+    },
+    {
+      "time": 1790640649957,
+      "type": "retry",
+      "data": {
+        "type": "system",
+        "subtype": "api_retry",
+        "attempt": 1,
+        "max_retries": 10,
+        "retry_delay_ms": 507,
+        "error_status": null,
+        "error": "unknown",
+        "session_id": "36822cd2-8dd1-4b74-9b5b-08976db2183a",
+        "uuid": "a39a53cc-d20a-4bc6-a95a-1d1cf6c19f61"
+      }
+    },
+    {
+      "time": 1790640650469,
+      "type": "retry",
+      "data": {
+        "type": "system",
+        "subtype": "api_retry",
+        "attempt": 2,
+        "max_retries": 10,
+        "retry_delay_ms": 1133,
+        "error_status": null,
+        "error": "unknown",
+        "session_id": "36822cd2-8dd1-4b74-9b5b-08976db2183a",
+        "uuid": "8ae83f03-db16-447d-a222-e8bdbbe1a3b7"
+      }
+    },
+    {
+      "time": 1790640650470,
+      "type": "stop",
+      "data": "Provider retry limit reached."
+    }
+  ],
+  "usage": null,
+  "reportedCost": null,
+  "sessionId": "36822cd2-8dd1-4b74-9b5b-08976db2183a",
+  "checks": [
+    {
+      "id": "check.cjs",
+      "command": [
+        "/usr/local/bin/node",
+        "check.cjs"
+      ],
+      "required": true,
+      "cacheable": true,
+      "external": false,
+      "inputsClosed": true,
+      "status": "unrun",
+      "reason": "Selected conservatively from project rules and changed paths"
+    }
+  ],
+  "initialChanges": {
+    "status": "",
+    "diff": "",
+    "untracked": []
+  },
+  "changes": {
+    "status": "",
+    "diff": "",
+    "untracked": []
+  },
+  "acceptance": [],
+  "risk": {
+    "broad": false,
+    "reasons": []
+  },
+  "model": "claude-sonnet-5",
+  "effort": "low",
+  "metrics": {
+    "toolCalls": 0,
+    "duplicateReads": 0,
+    "blockedActions": 0,
+    "retries": 2,
+    "localModelTokens": 0
+  },
+  "resumedFrom": null,
+  "integration": [
+    {
+      "name": "tokenpilot",
+      "status": "connected",
+      "source": "dynamic"
+    }
+  ],
+  "stopReason": "Provider retry limit reached.",
+  "ended": 1790640651042,
+  "elapsedMs": 1514,
+  "controllerCpuMs": 5.568,
+  "exitCode": 143,
+  "signal": null,
+  "accounting": "Final usage unavailable. Partial reported usage may omit in-flight work."
+}

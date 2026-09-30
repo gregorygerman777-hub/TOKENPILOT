@@ -1,0 +1,308 @@
+{
+  "started": 1790643662724,
+  "ended": 1790643816013,
+  "repetitions": 1,
+  "model": "sonnet",
+  "rows": [
+    {
+      "case": "logic",
+      "repetition": 1,
+      "controller": true,
+      "model": "claude-sonnet-5",
+      "effort": "low",
+      "correct": true,
+      "completed": true,
+      "status": "completed",
+      "tokens": 18830,
+      "usage": {
+        "input_tokens": 10,
+        "cache_creation_input_tokens": 1931,
+        "cache_read_input_tokens": 16360,
+        "output_tokens": 529,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 1931,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 65,
+            "cache_read_input_tokens": 3870,
+            "cache_creation_input_tokens": 294,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 294
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost": 0.016306,
+      "elapsedMs": 14717,
+      "controllerCpuMs": 993.317,
+      "toolCalls": 4,
+      "controllerModelTokens": 0,
+      "run": "b2d180c7-cc4d-496f-9c87-0ea89e5b6c52"
+    },
+    {
+      "case": "logic",
+      "repetition": 1,
+      "controller": false,
+      "model": "claude-sonnet-5",
+      "effort": "low",
+      "correct": true,
+      "completed": true,
+      "status": "completed",
+      "tokens": 59426,
+      "usage": {
+        "input_tokens": 10,
+        "cache_creation_input_tokens": 12312,
+        "cache_read_input_tokens": 46555,
+        "output_tokens": 549,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 12312,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 34,
+            "cache_read_input_tokens": 11976,
+            "cache_creation_input_tokens": 336,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 336
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost": 0.064069,
+      "elapsedMs": 24546,
+      "controllerCpuMs": 1125.027,
+      "toolCalls": 4,
+      "controllerModelTokens": 0,
+      "run": "cbf3e9c2-6817-43af-8bf0-cbd2744b24d2"
+    },
+    {
+      "case": "debug",
+      "repetition": 1,
+      "controller": true,
+      "model": "claude-sonnet-5",
+      "effort": "low",
+      "correct": true,
+      "completed": true,
+      "status": "completed",
+      "tokens": 18960,
+      "usage": {
+        "input_tokens": 10,
+        "cache_creation_input_tokens": 1958,
+        "cache_read_input_tokens": 16412,
+        "output_tokens": 580,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 1958,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 93,
+            "cache_read_input_tokens": 3896,
+            "cache_creation_input_tokens": 295,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 295
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost": 0.016934400000000002,
+      "elapsedMs": 12853,
+      "controllerCpuMs": 680.064,
+      "toolCalls": 4,
+      "controllerModelTokens": 0,
+      "run": "f72ed72f-0932-4a47-9bd3-9a732f9dc708"
+    },
+    {
+      "case": "debug",
+      "repetition": 1,
+      "controller": false,
+      "model": "claude-sonnet-5",
+      "effort": "low",
+      "correct": true,
+      "completed": true,
+      "status": "completed",
+      "tokens": 71336,
+      "usage": {
+        "input_tokens": 12,
+        "cache_creation_input_tokens": 7229,
+        "cache_read_input_tokens": 63479,
+        "output_tokens": 616,
+        "output_tokens_details": {
+          "thinking_tokens": 0
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 7229,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 59,
+            "cache_read_input_tokens": 12095,
+            "cache_creation_input_tokens": 303,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 303
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost": 0.04779579999999999,
+      "elapsedMs": 13329,
+      "controllerCpuMs": 653.424,
+      "toolCalls": 5,
+      "controllerModelTokens": 0,
+      "run": "e0762185-6499-47b2-8291-b8e060043a20"
+    },
+    {
+      "case": "broad-validation",
+      "repetition": 1,
+      "controller": true,
+      "model": "claude-sonnet-5",
+      "effort": "medium",
+      "correct": true,
+      "completed": true,
+      "status": "completed",
+      "tokens": 20276,
+      "usage": {
+        "input_tokens": 10,
+        "cache_creation_input_tokens": 2344,
+        "cache_read_input_tokens": 17186,
+        "output_tokens": 736,
+        "output_tokens_details": {
+          "thinking_tokens": 16
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 2344,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 94,
+            "cache_read_input_tokens": 4133,
+            "cache_creation_input_tokens": 444,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 444
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost": 0.0201932,
+      "elapsedMs": 10391,
+      "controllerCpuMs": 1172.847,
+      "toolCalls": 4,
+      "controllerModelTokens": 0,
+      "run": "60731268-5283-4ced-ad93-bfb40049c2a2"
+    },
+    {
+      "case": "broad-validation",
+      "repetition": 1,
+      "controller": false,
+      "model": "claude-sonnet-5",
+      "effort": "medium",
+      "correct": true,
+      "completed": true,
+      "status": "completed",
+      "tokens": 60772,
+      "usage": {
+        "input_tokens": 10,
+        "cache_creation_input_tokens": 12276,
+        "cache_read_input_tokens": 47782,
+        "output_tokens": 704,
+        "output_tokens_details": {
+          "thinking_tokens": 14
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 12276,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 71,
+            "cache_read_input_tokens": 12245,
+            "cache_creation_input_tokens": 440,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 440
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost": 0.06572040000000001,
+      "elapsedMs": 75669,
+      "controllerCpuMs": 2882.199,
+      "toolCalls": 4,
+      "controllerModelTokens": 0,
+      "run": "86247ded-ef1c-4f90-85e5-caf31ff5be69"
+    }
+  ]
+}

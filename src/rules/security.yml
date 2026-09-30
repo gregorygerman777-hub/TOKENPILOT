@@ -1,0 +1,28 @@
+rules:
+  - id: python-shell-command
+    languages: [python]
+    severity: ERROR
+    message: Shell execution requires review for untrusted input. Static evidence is not proof of exploitability.
+    pattern: subprocess.$FUNC(..., shell=True, ...)
+  - id: python-eval
+    languages: [python]
+    severity: ERROR
+    message: Dynamic evaluation requires review for untrusted input.
+    pattern: eval(...)
+  - id: python-pickle
+    languages: [python]
+    severity: WARNING
+    message: Pickle deserialization requires trusted input.
+    pattern-either:
+      - pattern: pickle.loads(...)
+      - pattern: pickle.load(...)
+  - id: javascript-eval
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: Dynamic evaluation requires review for untrusted input.
+    pattern: eval(...)
+  - id: python-md5
+    languages: [python]
+    severity: WARNING
+    message: MD5 is unsuitable for password storage or collision-resistant security uses. Review context.
+    pattern: hashlib.md5(...)

@@ -1,0 +1,4 @@
+{"time":1790640645113,"type":"policy","data":{"message":"Start with focused work and conservative required checks","policy":{"calls":36,"repeats":2,"lines":160,"chars":10000,"minutes":3,"mode":"economy","model":"sonnet","effort":"low","spend":0.6,"tokens":200000,"optionalChecks":2,"autoEscalate":false}}}
+{"time":1790640646042,"type":"retry","data":{"type":"system","subtype":"api_retry","attempt":1,"max_retries":10,"retry_delay_ms":566,"error_status":null,"error":"unknown","session_id":"cd82efb9-d6c5-4162-a1d0-6aa681d01826","uuid":"6639c251-1879-4835-b1ee-98ac9e650e95"}}
+{"time":1790640646615,"type":"retry","data":{"type":"system","subtype":"api_retry","attempt":2,"max_retries":10,"retry_delay_ms":1192,"error_status":null,"error":"unknown","session_id":"cd82efb9-d6c5-4162-a1d0-6aa681d01826","uuid":"f624a028-5594-472d-b551-4ffc6ac7cbf5"}}
+{"time":1790640646616,"type":"stop","data":"Provider retry limit reached."}

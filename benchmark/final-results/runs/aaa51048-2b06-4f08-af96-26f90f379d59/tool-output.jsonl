@@ -1,0 +1,1 @@
+{"time":1790639464443,"tool":"search","args":{"text":"average","prefix":""},"output":"check.cjs:1: const assert=require('node:assert/strict');const {average}=require('./index.cjs');assert.equal(average([2,4]),3);assert.equal(average([]),0);\nindex.cjs:1: exports.average = xs => xs.reduce((a,b)=>a+b,0) / (xs.length + 1);"}

@@ -1,0 +1,4 @@
+{"time":1790639298357,"tool":"discover","args":{"prefix":""},"output":"check.cjs\nindex.cjs\nintegration.cjs\ntokenpilot.json"}
+{"time":1790639299413,"tool":"read","args":{"path":"index.cjs","start":1,"lines":120},"output":"1: exports.parseCount = value => Number(value);\n2: "}
+{"time":1790639299735,"tool":"read","args":{"path":"check.cjs","start":1,"lines":120},"output":"1: const assert=require('node:assert/strict');const {parseCount}=require('./index.cjs');assert.equal(parseCount(2),2);assert.throws(()=>parseCount(-1),TypeError);assert.throws(()=>parseCount('2'),TypeError);\n2: "}
+{"time":1790639299892,"tool":"read","args":{"path":"integration.cjs","start":1,"lines":120},"output":"1: const assert=require('node:assert/strict');const {parseCount}=require('./index.cjs');assert.equal([0,1,2].map(parseCount).reduce((a,b)=>a+b),3);assert.throws(()=>parseCount(1.5),TypeError);assert.throws(()=>parseCount(NaN),TypeError);\n2: "}

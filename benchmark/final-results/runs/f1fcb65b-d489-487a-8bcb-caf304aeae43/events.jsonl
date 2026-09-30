@@ -1,0 +1,4 @@
+{"time":1790640651158,"type":"policy","data":{"message":"Broader validation required: public api","policy":{"calls":36,"repeats":2,"lines":160,"chars":10000,"minutes":3,"mode":"economy","model":"sonnet","effort":"medium","spend":0.6,"tokens":200000,"optionalChecks":2,"autoEscalate":false}}}
+{"time":1790640651480,"type":"retry","data":{"type":"system","subtype":"api_retry","attempt":1,"max_retries":10,"retry_delay_ms":538,"error_status":null,"error":"unknown","session_id":"ed00a7d5-1488-40a1-b6b1-d88852fa0373","uuid":"bbba08ec-052a-46b2-b38a-9d9e71deb29c"}}
+{"time":1790640652027,"type":"retry","data":{"type":"system","subtype":"api_retry","attempt":2,"max_retries":10,"retry_delay_ms":1197,"error_status":null,"error":"unknown","session_id":"ed00a7d5-1488-40a1-b6b1-d88852fa0373","uuid":"fe4324fb-9941-42c5-a0fb-6c0991a66d56"}}
+{"time":1790640652027,"type":"stop","data":"Provider retry limit reached."}

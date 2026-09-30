@@ -1,0 +1,63 @@
+{
+  "testedAt": "2026-09-29T01:01:08.957Z",
+  "checks": [
+    "packaged app launches",
+    "official Claude login recognized",
+    "packaged MCP bridge connects",
+    "real project file edited",
+    "required verification runs",
+    "Stop terminates in-flight verification",
+    "Resume uses reported session ID",
+    "required verification passes after resume",
+    "tracked diff appears",
+    "usage and session accounting warning appear"
+  ],
+  "records": [
+    {
+      "id": "1f4e4e0e-5fc7-4373-a63e-973137a362c3",
+      "status": "completed",
+      "usage": {
+        "input_tokens": 6,
+        "cache_creation_input_tokens": 1102,
+        "cache_read_input_tokens": 12079,
+        "output_tokens": 310,
+        "output_tokens_details": {
+          "thinking_tokens": 10
+        },
+        "server_tool_use": {
+          "web_search_requests": 0,
+          "web_fetch_requests": 0
+        },
+        "service_tier": "standard",
+        "cache_creation": {
+          "ephemeral_1h_input_tokens": 1102,
+          "ephemeral_5m_input_tokens": 0
+        },
+        "inference_geo": "not_available",
+        "iterations": [
+          {
+            "input_tokens": 2,
+            "output_tokens": 57,
+            "cache_read_input_tokens": 4360,
+            "cache_creation_input_tokens": 293,
+            "cache_creation": {
+              "ephemeral_5m_input_tokens": 0,
+              "ephemeral_1h_input_tokens": 293
+            },
+            "type": "message"
+          }
+        ],
+        "speed": "standard"
+      },
+      "cost": 0.027795399999999998,
+      "elapsedMs": 7811
+    },
+    {
+      "id": "fff88a78-cd65-4ece-902f-78815de4bde3",
+      "status": "stopped",
+      "usage": null,
+      "cost": null,
+      "elapsedMs": 6829
+    }
+  ]
+}

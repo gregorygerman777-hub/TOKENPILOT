@@ -1,0 +1,153 @@
+{
+  "id": "f1fcb65b-d489-487a-8bcb-caf304aeae43",
+  "root": "/private/var/folders/88/dzxy5h0n6nqdjjjnzl9rgvf40000gn/T/tokenpilot-bench-mObUPL",
+  "task": "Fix the public API parseCount to reject negative numbers, fractional values and non-numbers with TypeError. Preserve valid nonnegative integers. This public interface needs all project validation.",
+  "criteria": "parseCount rejects invalid values with TypeError and accepts nonnegative integers\nAll configured verification checks pass",
+  "policy": {
+    "calls": 36,
+    "repeats": 2,
+    "lines": 160,
+    "chars": 10000,
+    "minutes": 3,
+    "mode": "economy",
+    "model": "sonnet",
+    "effort": "medium",
+    "spend": 0.6,
+    "tokens": 200000,
+    "optionalChecks": 2,
+    "autoEscalate": false
+  },
+  "controller": false,
+  "started": 1790640651158,
+  "status": "blocked",
+  "events": [
+    {
+      "time": 1790640651158,
+      "type": "policy",
+      "data": {
+        "message": "Broader validation required: public api",
+        "policy": {
+          "calls": 36,
+          "repeats": 2,
+          "lines": 160,
+          "chars": 10000,
+          "minutes": 3,
+          "mode": "economy",
+          "model": "sonnet",
+          "effort": "medium",
+          "spend": 0.6,
+          "tokens": 200000,
+          "optionalChecks": 2,
+          "autoEscalate": false
+        }
+      }
+    },
+    {
+      "time": 1790640651480,
+      "type": "retry",
+      "data": {
+        "type": "system",
+        "subtype": "api_retry",
+        "attempt": 1,
+        "max_retries": 10,
+        "retry_delay_ms": 538,
+        "error_status": null,
+        "error": "unknown",
+        "session_id": "ed00a7d5-1488-40a1-b6b1-d88852fa0373",
+        "uuid": "bbba08ec-052a-46b2-b38a-9d9e71deb29c"
+      }
+    },
+    {
+      "time": 1790640652027,
+      "type": "retry",
+      "data": {
+        "type": "system",
+        "subtype": "api_retry",
+        "attempt": 2,
+        "max_retries": 10,
+        "retry_delay_ms": 1197,
+        "error_status": null,
+        "error": "unknown",
+        "session_id": "ed00a7d5-1488-40a1-b6b1-d88852fa0373",
+        "uuid": "fe4324fb-9941-42c5-a0fb-6c0991a66d56"
+      }
+    },
+    {
+      "time": 1790640652027,
+      "type": "stop",
+      "data": "Provider retry limit reached."
+    }
+  ],
+  "usage": null,
+  "reportedCost": null,
+  "sessionId": "ed00a7d5-1488-40a1-b6b1-d88852fa0373",
+  "checks": [
+    {
+      "id": "check.cjs",
+      "command": [
+        "/usr/local/bin/node",
+        "check.cjs"
+      ],
+      "required": true,
+      "cacheable": true,
+      "external": false,
+      "inputsClosed": true,
+      "status": "unrun",
+      "reason": "Selected conservatively from project rules and changed paths"
+    },
+    {
+      "id": "integration.cjs",
+      "command": [
+        "/usr/local/bin/node",
+        "integration.cjs"
+      ],
+      "required": true,
+      "cacheable": true,
+      "external": false,
+      "inputsClosed": true,
+      "status": "unrun",
+      "reason": "Selected conservatively from project rules and changed paths"
+    }
+  ],
+  "initialChanges": {
+    "status": "",
+    "diff": "",
+    "untracked": []
+  },
+  "changes": {
+    "status": "",
+    "diff": "",
+    "untracked": []
+  },
+  "acceptance": [],
+  "risk": {
+    "broad": true,
+    "reasons": [
+      "public api"
+    ]
+  },
+  "model": "claude-sonnet-5",
+  "effort": "medium",
+  "metrics": {
+    "toolCalls": 0,
+    "duplicateReads": 0,
+    "blockedActions": 0,
+    "retries": 2,
+    "localModelTokens": 0
+  },
+  "resumedFrom": null,
+  "integration": [
+    {
+      "name": "tokenpilot",
+      "status": "connected",
+      "source": "dynamic"
+    }
+  ],
+  "stopReason": "Provider retry limit reached.",
+  "ended": 1790640652617,
+  "elapsedMs": 1459,
+  "controllerCpuMs": 6.314,
+  "exitCode": 143,
+  "signal": null,
+  "accounting": "Final usage unavailable. Partial reported usage may omit in-flight work."
+}

@@ -1,0 +1,16 @@
+{
+  "enabled": {
+    "runs": 1,
+    "correctCompleted": 1,
+    "totalTokens": 61118,
+    "tokensPerCorrectCompletion": 61118,
+    "allUsageReported": true
+  },
+  "disabled": {
+    "runs": 1,
+    "correctCompleted": 1,
+    "totalTokens": 74277,
+    "tokensPerCorrectCompletion": 74277,
+    "allUsageReported": true
+  }
+}
