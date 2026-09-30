@@ -5,6 +5,8 @@
 - Diagnose stage: deterministic repair briefs per finding group (enclosing function, references, related tests, checks, fix direction), 0 model tokens. Secrets are withheld from briefs.
 - Desktop focused repair and the new `tokenpilot_brief` MCP tool hand Claude the brief instead of a one-sentence task.
 - `tokenpilot repair`: scan, brief, budgeted repair, gate and revert on a private clone, with a self-contained trust report and a verified-only patch.
+- README restructured around the pipeline with fresh app screenshots; full reference moved to `docs/GUIDE.md`.
+- Scanner availability probe waits up to 20 seconds, so parallel test runs no longer skip live scanner tests.
 - `benchmark/brief.cjs`: paired study of brief versus one-sentence repair handoffs. Not yet run; no savings figure claimed.
 
 ## 1.2.0

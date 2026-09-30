@@ -1,217 +1,153 @@
 # TokenPilot
 
-**Spend tokens on reasoning. Keep the evidence.**
+**Spend tokens on fixing, not finding.** TokenPilot finds security issues with local scanners, hands Claude the exact code to fix instead of letting it explore, and keeps a patch only when the evidence says the fix holds.
 
-Created by Gregory German, freshman computer science student. TokenPilot is 100% open source under the MIT license and costs $0.00. External AI provider usage may have separate costs.
+Created by Gregory German, freshman computer science student. 100% open source under the MIT license and free. Claude usage for repairs is billed by your own provider account.
 
-TokenPilot 1.2 is a local coding workbench with a desktop app, browser dashboard and CI gate. Scan without an AI account, budget Claude repairs, and keep portable evidence of what changed.
+![TokenPilot Security Lab scanning a demo project: 4 findings, 0 model tokens](docs/screens/security-lab.png)
 
-![Security Lab](docs/security-lab.png)
+## The problem
 
-## Use it inside Claude Code
+Most of what a coding agent spends goes into looking: listing files, searching, re-reading the same section, re-running a check that already failed. Scanners are the opposite. They find issues for free but never fix them. And when an agent does return a fix, a plausible diff is not the same as proof that the issue is gone.
 
-Open **Open TokenPilot in Claude.command** in this folder, or launch:
+TokenPilot holds itself to two rules:
 
-```sh
-claude --plugin-dir /absolute/path/to/TokenPilot
+- **No model tokens for work plain code can do.** Finding issues, locating the affected function, collecting its callers and tests, and choosing the checks are all deterministic.
+- **A fix counts only with evidence.** The project's checks pass, the finding is gone on rescan, nothing new appears and no test was edited. Anything else is reverted.
+
+## How it works
+
+```mermaid
+flowchart LR
+    T["Target<br/>local Git project"] --> S["Snapshot<br/>file hashes, commit"]
+    S --> D["Detect<br/>Semgrep + Gitleaks<br/>0 model tokens"]
+    D --> B["Diagnose<br/>repair brief<br/>0 model tokens"]
+    B --> R["Repair<br/>budgeted Claude Code session"]
+    R --> V["Verify<br/>checks, rescan, gate"]
+    V -->|verified| P["fixes.patch + trust report<br/>you review and apply"]
+    V -->|rejected| X["reverted"]
 ```
 
-Then use `/tokenpilot:scan /absolute/path/to/project` or `/tokenpilot:verify BASELINE_RUN_ID /absolute/path/to/project`. The plugin uses the same local scanner backend and history. [Claude Code setup](docs/CLAUDE.md).
+1. **Snapshot** copies the source into private storage with a hash for every file and the Git commit, so every later comparison is against exactly what was scanned.
+2. **Detect** runs Semgrep with a bundled rule pack and Gitleaks with full redaction. No model call.
+3. **Diagnose** turns each rule/file group into a repair brief: the enclosing function with line numbers, other references, related tests, the project's checks and a fix direction. No model call, and secret values never enter a brief.
+4. **Repair** starts a Claude Code session from the brief, with bounded tools, a compact system prompt and hard limits on tool calls, repeats, time and spend.
+5. **Verify** reruns the checks, rescans against the snapshot and applies a plain-code gate. It rejects remaining findings, new findings, suppression comments and edited tests.
 
-## Run the browser workbench
+![A repair brief handed to Claude in the desktop app](docs/screens/repair-brief.png)
 
-From the extracted TokenPilot folder:
+## What makes it different
 
-```sh
-npm ci
-npm run web
-```
+- **Finding costs nothing.** Detection and diagnosis never call a model.
+- **Claude starts at the right line.** The brief replaces the search-and-read phase of a repair.
+- **Budgets are enforced, not suggested.** Tool calls, repeated actions and elapsed time are blocked locally. Spend uses Claude Code's own `--max-budget-usd`.
+- **The gate is code, not a model's opinion.** No agent can mark its own work verified.
+- **Your repository is never touched.** `tokenpilot repair` works on a private clone and gives you a patch of verified fixes to review.
+- **Unmeasured means unmeasured.** Savings, reproduction and review steps that did not run are shown that way, never as a pass.
 
-Open the local URL printed in Terminal, then choose **Use sample project**. The frontend uses the real local scanner backend, with progress, history, comparisons and report downloads. [Local web setup](docs/WEB.md).
+## Results
 
-![Local browser workbench](docs/web-workbench.png)
+| Measurement | Result | Scope |
+|---|---|---|
+| Model tokens to detect and diagnose | **0** | Every scan. Scanners and briefs are deterministic. |
+| Coding controller vs. stock prompt | **69.0% fewer tokens** | 8 matched pairs on 4 small synthetic tasks, same model and effort. 5 attempts without final usage stay in the record. [Details](BENCHMARK.md) |
+| Repair brief vs. one-sentence handoff | **Not yet measured** | `node benchmark/brief.cjs` repairs the same scanner findings both ways with everything else held equal. |
 
-## A demo that runs
+The 69.0% figure covers general coding tasks, not repairs of scanner findings. No savings number for repairs is claimed until the brief study has run.
 
-```sh
-node src/cli.cjs demo /tmp/tokenpilot-demo
-node src/cli.cjs verify-bundle /tmp/tokenpilot-demo/after
-```
+## Screens
 
-Real scanners inspect a built-in unsafe fixture, a fixed JSON-only repair recipe is applied, then scanners compare the result to the captured baseline. This is a reproducible educational demo, not an autonomous repair or exploit proof. Choose a fresh output directory.
+The browser workbench runs on your Mac and uses the same scanner backend and history as the desktop app.
 
-## Scan, brief, repair, verify
+![Browser workbench with 4 static findings on a demo project](docs/screens/web-workbench.png)
 
-```sh
-node src/cli.cjs repair /absolute/git-project --output /tmp/pilot-repair
-```
+## Tech stack
 
-One command runs the whole pipeline on a private clone of the committed HEAD. Your repository is never modified.
-
-1. **Scan.** Semgrep and Gitleaks find candidate issues. 0 model tokens.
-2. **Brief.** For each rule/file group, TokenPilot builds a repair brief locally: the enclosing function with line numbers, other references, related tests, project checks and a fix direction. 0 model tokens. Secret values are never copied into a brief.
-3. **Repair.** A budgeted Claude Code session starts from the brief instead of exploring the repository.
-4. **Verify.** A patch is kept only if required checks pass, the finding is gone on rescan, nothing new appears and tests are unedited. Anything else is reverted.
-
-The output folder holds `report.html` (a self-contained trust report), `fixes.patch` (verified fixes only, for you to review and apply) and `run.json`. The same brief is available in the desktop app's **Prepare focused repair** and to Claude Code through the `tokenpilot_brief` MCP tool.
-
-Token savings from briefs are measured by `benchmark/brief.cjs`, which repairs the same scanner findings from the old one-sentence handoff and from the brief, with everything else held equal. No savings figure is claimed here until that study has run.
-
-## Use it in CI
-
-```sh
-node src/cli.cjs ci /absolute/project --output /tmp/pilot-evidence
-node src/cli.cjs ci /absolute/project --baseline /path/to/reviewed-baseline.json --output /tmp/pilot-next
-```
-
-Export HTML, JSON and SARIF together. CI distinguishes existing baseline debt from new findings, while incomplete scans fail closed. [CI setup and limitations](docs/CI.md).
-
-## Try the desktop app
-
-Open the app, choose **Security Lab → Try sample project**. The included sample has two intentionally unsafe patterns. Scanners inspect it without executing the code. No model request is sent. Select **Prepare focused repair** to review a budgeted Claude task before running it.
-
-Scanners are optional external tools:
-
-```sh
-brew install semgrep gitleaks
-```
-
-The app detects missing tools and records an incomplete scan instead of pretending it passed. The desktop installer requires no Node setup; project verification commands still need their own runtimes.
-
-## Security Lab, precisely
-
-- Source snapshots have file hashes and the available Git commit. Current uncommitted source is included. Generated directories, symlinks and files larger than 4 MB are outside coverage.
-- Semgrep runs a bundled, focused Python/JavaScript/TypeScript rule pack. Gitleaks runs its default rules with full secret redaction. No remote rule registry or Semgrep metrics are used. This is a starter rule pack, not a comprehensive security audit.
-- Findings group deterministically by rule and file. These are **candidate groups**, not AI-proven common root causes.
-- A focused repair must clear its selected group, introduce no new scanner groups/count increases, and pass required project checks. Existing tests and check configuration are protected for security repair sessions. Heuristic suppression/test-detection flags require review.
-- **Scanner-cleared** means the static rules stopped matching. It never means an exploit was reproduced or a behavior was proven safe.
-- HTML reports are self-contained, escape untrusted markup and include gate outcomes. Pattern-based redaction cannot catch every kind of secret; review reports before sharing. Local source snapshots retain original source and may contain secrets. They stay under the app's private data directory.
-- An independent AI Challenger is **not implemented**. It is displayed that way, never as an implied pass.
-
-### Optional frozen Docker probe
-
-In Project rules, add a `proof` object alongside `rules` and `checks`:
-
-```json
-{
-  "proof": {
-    "image": "python:3.12-alpine",
-    "runtime": "python3",
-    "script": "import sys; sys.path.insert(0, '/workspace'); from app import clamp; assert clamp(-1, 0, 5) == 0"
-  }
-}
-```
-
-The baseline freezes this script. The comparison runs that exact script against both saved snapshots. A behavioral gate requires **exit 1 before**, **exit 0 after**, the same image ID, and the same script hash. Setup failures, missing Docker/images and other exit codes remain unverified. Probes use a locally available image, no network, read-only source/root filesystem, an unprivileged user, dropped capabilities, and resource limits. Images are never pulled automatically. Docker itself and a trusted local image must be installed separately. This machine did not have Docker; the adapter is implemented but live Docker execution has not been validated here. Script quality still matters: a weak probe is not proof of general security.
-
-### CLI
-
-From the source checkout:
-
-```sh
-npm ci
-node src/cli.cjs doctor
-node src/cli.cjs scan ./my-project
-node src/cli.cjs history
-node src/cli.cjs scan ./my-project --baseline RUN_ID
-node src/cli.cjs report RUN_ID report.html
-```
-
-`npm link` optionally installs the `tokenpilot` command. Scan exit codes: 0 for a completed clean scan, 1 for completed scans with findings, 2 for incomplete/failed/stopped scans. CLI and desktop scan records are local. No GitHub publishing or automatic merging occurs.
-
-The prior [token benchmark](BENCHMARK.md) applies to the 1.0 coding controller, not a new security benchmark. This release makes no new savings-percentage claim.
-
-
-An installable, local macOS desktop controller for Claude Code. It reduces unnecessary context with a compact task-specific toolset and a stable, compact system prompt, blocks duplicate work, runs verification locally, and records provider-reported consumption. Codex and Gemini are explicitly unavailable adapters.
-
-## Install on this Mac
-
-This build targets **macOS Apple Silicon (arm64)**. Open `release/TokenPilot-1.2.0-arm64.dmg`, then drag TokenPilot into Applications. A ZIP of the application is also provided. The app is **not Developer ID signed or notarized**. macOS may block it; use System Settings > Privacy & Security > Open Anyway after attempting to open this build. Do not disable Gatekeeper globally.
-
-Claude Code is a separate prerequisite. The integration was tested with **Claude Code 2.1.283** using the user's existing official CLI login. Install it using Anthropic's instructions at https://code.claude.com/docs/en/setup. In TokenPilot, open Agent connection > Sign in with Claude. This launches the official `claude auth login` flow in Terminal. TokenPilot never reads a password, exports a credential, or copies credentials from another application. If you have a nonstandard CLI location, launch with `TOKENPILOT_CLAUDE=/absolute/path/to/claude`.
-
-## Use
-
-1. Select a trusted local project. Git is recommended for tracked diffs. Existing uncommitted changes are preserved and shown alongside task changes.
-2. Write a task and one concise acceptance criterion per line.
-3. Choose Economy, Balanced, or Deep Work. Review spend, time and delayed token thresholds. Economy uses Sonnet at low effort by default; risk rules raise low effort to medium for security, data integrity, concurrency and public interfaces. You can explicitly choose another supported model.
-4. Review Project rules. Detected npm test/lint/typecheck/build commands and pytest.ini are a starting point. Add all required project or CI checks the app cannot infer. Commands run with your local account permissions. Only use trusted projects and checks.
-5. Run the task. The agent can search, read, edit and create project text files. Arbitrary commands require a visible approval with exact arguments and a reason. No automatic multi-agent work.
-6. Review Activity, Changes, Verification and Usage. Stop terminates the agent process tree and ongoing verification. Resume is available when Claude reported a session ID. Resume begins a new run with the chosen run policy; provider reports may contain cumulative session totals, so do not add resumed task totals together.
-
-Acceptance is agent-reported, supported by local checks. Passing tests and a claimed acceptance checklist are not a mathematical proof of arbitrary user intent. Tasks without a successful `finish` are incomplete even if Claude returns a normal final answer. Required failing or unrun checks prevent completion.
-
-## Limits: what is actually controlled
-
-| Resource | Behavior |
+| Layer | What it uses |
 |---|---|
-| Tool calls, repeat requests | Locally blocked before execution. Repeated blocked actions end the task. |
-| Elapsed time | Local timer terminates the process tree; termination has a short grace period. |
-| Token threshold | Best effort after complete assistant messages. In-flight work can exceed it. |
-| Spend | Supported CLI `--max-budget-usd` request-boundary control, based on provider estimates. It is not an exact invoice or subscription cap. |
-| Optional verification | Configurable count. Required checks and broader risk checks override optional-work limits. |
-| Model / effort | Set when launching. Risk escalation creates a fresh session with a concise handoff and the remaining reported spend, time and token budget. |
-| Escalation approval | The user can allow each request or enable automatic permission. The approved handoff is started with Continue with higher effort. Missing final accounting prevents automatic budget carryover. |
-| Minimal edits, hypotheses, acceptance | Advisory instructions plus tool/state enforcement. Semantic correctness still needs review. |
-| Subscription allowance | Not exposed by this integration. |
+| Language | JavaScript (Node.js 22+, CommonJS), no build step |
+| Agent | Claude Code CLI in stream-json mode, with TokenPilot's bounded tools over the official MCP SDK |
+| Detection | Semgrep with a bundled rule pack, Gitleaks with full redaction |
+| Desktop | Electron with context isolation and a strict content security policy |
+| Web | Local Node HTTP server bound to 127.0.0.1 with a per-session bearer token |
+| Storage | Local JSON and snapshots under `~/Library/Application Support/TokenPilot` |
+| Tests | `node:test` and Playwright |
 
-Completed tasks reject all additional tools. A short final-response grace period allows Claude to emit final accounting; if it does not, the process is terminated and unavailable accounting remains unavailable.
+## Getting started
 
-## Project configuration
+### Prerequisites
 
-Save `tokenpilot.json` through Project rules. Example:
+- macOS (the desktop build targets Apple Silicon; the CLI and web workbench run anywhere Node does)
+- Node.js 22 or newer, npm and Git
+- Semgrep and Gitleaks: `brew install semgrep gitleaks`
+- For repairs only: Claude Code, signed in with `claude auth login`
 
-```json
-{
-  "rules": "Keep changes focused. Preserve public interfaces. Run required tests.",
-  "checks": [
-    {"id":"unit", "command":["npm","test"], "required":true},
-    {"id":"web", "command":["npm","run","test:web"], "required":false, "affects":["web/","shared/"]}
-  ]
-}
-```
-
-`CLAUDE.md` and `AGENTS.md` at the project root are included. Nested instructions must be discovered for affected directories. All configured required checks are selected; uncertain checks are selected conservatively. Risky paths or task descriptions select broader validation. `affects` lists prefixes, including dependencies such as shared modules. TokenPilot does not pretend to infer every language's dependency graph or arbitrary CI requirements.
-
-Successful checks cache only with all three declarations: `"cacheable":true`, `"inputsClosed":true`, `"external":false`. Use them only for deterministic checks with no clock, network, service, database or other external state. The key fingerprints all files and modes under the project, including ignored files and installed dependencies (excluding `.git`), the executable, command arguments, runtime and full environment. Symlink or unreadable inputs disable caching. Unknown inputs never cache. Changed files invalidate prior visible verification. A cache hit is labeled **cached**, not passed. Checks that generate output in the project may naturally invalidate their own cache.
-
-Check configuration is frozen during a run. The agent cannot edit tokenpilot.json with file tools. User-approved arbitrary commands remain powerful and should be reviewed. Built-in Claude tools and unrelated MCP servers are disabled for launched sessions; only TokenPilot's supported MCP tools are exposed.
-
-## Data and privacy
-
-No TokenPilot backend, telemetry or subscription service. Task records, full raw Claude streams, command/check logs, prompts and unabridged tool outputs are stored in `~/Library/Application Support/TokenPilot/tasks/`. Open logs from any task. These files can contain project source and task text. Directory/file permissions restrict access to the local user; logs are not encrypted. Authentication storage remains owned by the official CLI and its supported keychain/configuration mechanisms.
-
-Claude requests leave the computer and use your configured provider account. TokenPilot does not change the provider's own telemetry preferences. It controls its own sessions, not unrelated Claude/Codex/Gemini windows. The app is not an operating-system sandbox: approved commands and trusted verification scripts run as your user.
-
-## Development
-
-Requires Node.js 22+ and npm on macOS. Runtime packages are pinned by package-lock.json.
+### Install
 
 ```sh
+git clone https://github.com/gregorygerman777-hub/TOKENPILOT.git
+cd TOKENPILOT
 npm ci
-npm start
-npm test
-npm run test:ui
-npm run dist
 ```
 
-Electron packages the desktop runtime. The packaged MCP bridge runs with Electron's Node mode and does not require a separate Node installation for the bridge. Your own project's verification commands still need their respective language runtimes.
+### Run
 
-- `src/engine.cjs`: framework-independent orchestration, persistence, budgets, bounded tools and acceptance gate.
-- `src/policy.cjs`, `files.cjs`, `verify.cjs`: deterministic control, filesystem boundary and conservative verification.
-- `src/claude.cjs`: supported CLI streaming adapter. Capability metadata explicitly marks Codex and Gemini unavailable.
-- `src/bridge.mjs`: official MCP SDK transport for the bounded local tools.
-- `src/main.cjs`, `preload.cjs`, `ui/`: Electron and a CSP-restricted interface, context isolation enabled, no renderer Node access.
-- `test/`: budget, accounting, cache invalidation, loop, process termination, adapter, UI and packaged-app checks.
-- `benchmark/`: real paid-provider experiments and independent acceptance assertions. See BENCHMARK.md.
+```sh
+npm run web                                   # browser workbench, open http://127.0.0.1:8792
+node src/cli.cjs repair /path/to/git-project --output /tmp/pilot-repair
+npm start                                     # desktop app
+claude --plugin-dir "$(pwd)"                  # Claude Code plugin: /tokenpilot:scan <path>
+```
 
-## Official integration references
+Open the workbench at `127.0.0.1`, not `localhost`: the server only accepts its exact address. `repair` writes `report.html`, `fixes.patch` and `run.json` to the output folder.
 
-Reviewed September 28, 2026:
+### CLI reference
 
-- https://code.claude.com/docs/en/headless: CLI sessions, stream-json, result events, SIGTERM and resume behavior.
-- https://code.claude.com/docs/en/cli-reference: tools, system-prompt, effort, spend, permissions and MCP configuration flags.
-- https://code.claude.com/docs/en/mcp: local stdio servers and configuration.
-- https://code.claude.com/docs/en/costs: provider cost estimates and prompt-caching considerations.
+| Command | What it does |
+|---|---|
+| `scan <path> [--baseline <run-id>]` | Scan a folder or file. Exit 0 clean, 1 findings, 2 incomplete. |
+| `repair <git-project> --output <dir>` | Scan, brief, repair, verify on a private clone. Writes a trust report and a verified-only patch. |
+| `ci <path> [--baseline <evidence.json>]` | CI gate that separates existing baseline debt from new findings. |
+| `report <run-id> [out.html]` | Self-contained HTML report for a scan. |
+| `demo <new-dir>` | Before/after demo with a fixed repair recipe and no AI calls. |
+| `history`, `doctor`, `serve [port]` | Scan history, scanner check, browser workbench. |
 
-Cost shown by TokenPilot is the CLI's reported API-price estimate; it does not calculate a separate undocumented price table or equate that estimate to subscription usage. Input, cache creation, cache reads and output are separate provider categories. Reasoning is shown only when reported and treated as a subset of output, never added twice.
+### Develop
+
+```sh
+npm test            # unit and integration tests; live scanner tests run when Semgrep and Gitleaks are installed
+npm run test:ui     # desktop UI checks
+node benchmark/brief.cjs   # paid study: brief vs. one-sentence repair handoff
+```
+
+## Repository layout
+
+| Path | What's there |
+|---|---|
+| `src/security.cjs` | Snapshot, scanners, grouping, comparison and the scoped gate |
+| `src/diagnose.cjs` | Repair briefs |
+| `src/pipeline.cjs`, `src/trust.cjs` | The repair pipeline and the trust report |
+| `src/engine.cjs`, `policy.cjs`, `verify.cjs` | The budgeted agent controller, limits and check runner |
+| `src/claude.cjs`, `src/bridge.mjs` | Claude Code adapter and the bounded MCP tools |
+| `src/security-mcp.mjs`, `skills/` | The Claude Code plugin |
+| `src/server.cjs`, `web/` | Browser workbench |
+| `src/main.cjs`, `ui/` | Electron desktop app |
+| `benchmark/` | Paid-provider studies with independent acceptance checks and raw run logs |
+| `test/` | Unit, integration, MCP and UI tests |
+
+## Safety
+
+- The web server binds to 127.0.0.1 only and requires a random session token, exact Host matching and same-origin requests.
+- Gitleaks always runs with full redaction, and briefs withhold secret values entirely.
+- Source excerpts and scanner output are passed to Claude as untrusted data, never as instructions.
+- Repair sessions can only use TokenPilot's bounded tools. Arbitrary commands need your approval, and tests and check configuration are locked during security repairs.
+- Scanner-cleared means the rules stopped matching. It is not a reproduced exploit or proof that behavior is safe. An independent AI reviewer is not implemented and is never implied.
+
+## More documentation
+
+- [`docs/GUIDE.md`](docs/GUIDE.md): the desktop app, Security Lab, limits, configuration and privacy in full
+- [`docs/WEB.md`](docs/WEB.md): the browser workbench
+- [`docs/CLAUDE.md`](docs/CLAUDE.md): the Claude Code plugin
+- [`docs/CI.md`](docs/CI.md): the CI gate
+- [`BENCHMARK.md`](BENCHMARK.md) and [`docs/VALIDATION.md`](docs/VALIDATION.md): measurements and what was tested
+- [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md), [`CHANGELOG.md`](CHANGELOG.md)

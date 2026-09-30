@@ -29,7 +29,7 @@ function available(tool) {
       binary: p,
       version: execFileSync(p, [tool === "docker" ? "--version" : "version"], {
         encoding: "utf8",
-        timeout: 5000,
+        timeout: 20000,
         stdio: ["ignore", "pipe", "pipe"],
       }).trim(),
     };
@@ -40,7 +40,7 @@ function available(tool) {
         binary: p,
         version: execFileSync(p, ["--version"], {
           encoding: "utf8",
-          timeout: 5000,
+          timeout: 20000,
           stdio: ["ignore", "pipe", "pipe"],
         }).trim(),
       };
