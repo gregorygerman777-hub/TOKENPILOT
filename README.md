@@ -6,6 +6,14 @@ Created by Gregory German, freshman computer science student. 100% open source u
 
 ![TokenPilot Security Lab scanning a demo project: 4 findings, 0 model tokens](site/screens/security-lab.png)
 
+## Install on Mac (Apple Silicon)
+
+```sh
+curl -fsSL https://github.com/gregorygerman777-hub/TOKENPILOT/releases/download/v1.2.1/install.sh | sh
+```
+
+Installs the desktop app and CLI with a bundled runtime, then opens TokenPilot. Open a new Terminal and run `tokenpilot status`. Install the scanners using `brew install semgrep gitleaks`. This release is unsigned and may require macOS approval. [Installation details](docs/INSTALL.md) · [Downloads and checksums](https://github.com/gregorygerman777-hub/TOKENPILOT/releases/tag/v1.2.1).
+
 ## The problem
 
 Most of what a coding agent spends goes into looking: listing files, searching, re-reading the same section, re-running a check that already failed. Scanners are the opposite. They find issues for free but never fix them. And when an agent does return a fix, a plausible diff is not the same as proof that the issue is gone.

@@ -53,7 +53,7 @@ async function main() {
     process.once("SIGTERM", () => server.close());
     return;
   }
-  if (command === "doctor") {
+  if (command === "doctor" || command === "status") {
     output(security.capabilities());
     return;
   }
@@ -190,7 +190,7 @@ async function main() {
   if (command && !["help", "--help", "-h"].includes(command))
     throw Error("Unknown command: " + command);
   console.log(
-    "TokenPilot\n  serve [port]\n  doctor\n  demo <new-directory>\n  scan <project> [--baseline <run-id>] [--output <new-directory>]\n  ci <project> [--baseline <evidence.json>] [--output <new-directory>]\n  bundle <run-id> <new-directory>\n  verify-bundle <directory>\n  history\n  report <run-id> [output.html]\n  repair <git-project> --output <new-directory> [--max 20] [--model sonnet] [--spend 0.6]\n\nNo AI account needed for scanning, CI, demos or exports. repair uses Claude Code on a private clone.\nCI: 0 passes the selected policy; 1 findings/regression; 2 incomplete/error.",
+    "TokenPilot\n  serve [port]\n  doctor (or status)\n  demo <new-directory>\n  scan <project> [--baseline <run-id>] [--output <new-directory>]\n  ci <project> [--baseline <evidence.json>] [--output <new-directory>]\n  bundle <run-id> <new-directory>\n  verify-bundle <directory>\n  history\n  report <run-id> [output.html]\n  repair <git-project> --output <new-directory> [--max 20] [--model sonnet] [--spend 0.6]\n\nNo AI account needed for scanning, CI, demos or exports. repair uses Claude Code on a private clone.\nCI: 0 passes the selected policy; 1 findings/regression; 2 incomplete/error.",
   );
 }
 main().catch((e) => {

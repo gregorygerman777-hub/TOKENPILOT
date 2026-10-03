@@ -1,3 +1,9 @@
+# 1.2.1
+
+- Add checksum-verified Apple Silicon installer, bundled-runtime CLI launcher and status alias.
+- Publish matching desktop, source, installer, checksums and website download instructions.
+- Preserve current deterministic diagnosis and repair pipeline.
+
 # Changelog
 
 ## Unreleased

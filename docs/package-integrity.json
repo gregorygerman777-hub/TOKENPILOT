@@ -1,37 +1,129 @@
 {
-  "version": "1.2.0",
-  "checkedAt": "2026-09-29T20:13:27.822Z",
-  "sourceMatchesPackagedFiles": [
-    "src/bridge.mjs",
-    "src/claude.cjs",
-    "src/cli.cjs",
-    "src/demo.cjs",
-    "src/engine.cjs",
-    "src/evidence.cjs",
-    "src/files.cjs",
-    "src/main.cjs",
-    "src/policy.cjs",
-    "src/preload.cjs",
-    "src/report.cjs",
-    "src/rules/gitleaks.toml",
-    "src/rules/security.yml",
-    "src/security-mcp.mjs",
-    "src/security.cjs",
-    "src/server.cjs",
-    "src/verify.cjs",
-    "ui/app.js",
-    "ui/fonts/OFL.txt",
-    "ui/fonts/VT323-Regular.ttf",
-    "ui/index.html",
-    "ui/style.css",
-    "web/app.js",
-    "web/index.html",
-    "web/style.css",
-    "demo/README.md",
-    "demo/app.py",
-    "demo/format.js"
-  ],
-  "asarSHA256": "78f39353632fc78919df6228ae4081e3d21c7795d5a764d6a28a8deb510a3701",
-  "developerIdSigned": false,
-  "notarized": false
+  "version": "1.2.1",
+  "files": [
+    {
+      "file": "src/bridge.mjs",
+      "sha256": "e2cc852f3ec3926289544ac5c33dfcac429f7bb0767b27543134de17d9128f0a"
+    },
+    {
+      "file": "src/claude.cjs",
+      "sha256": "59d48b3233626e7c9c3151ca50a1b45b164dc0163e5ad1341fa6dad989f8864f"
+    },
+    {
+      "file": "src/cli.cjs",
+      "sha256": "2fbcd3e9ef22be63734a825b00ffe8fccbbb08d20b9e01cad54946c288179670"
+    },
+    {
+      "file": "src/demo.cjs",
+      "sha256": "2d9207fc239d5d4b3f6b834931a737b60ca552963532212a1c0203658eb982ca"
+    },
+    {
+      "file": "src/diagnose.cjs",
+      "sha256": "7bf0e704609812f4073c38a1ee1bd9209a80c6c3241d9e1be1dc6ac874715a1b"
+    },
+    {
+      "file": "src/engine.cjs",
+      "sha256": "33a5e2c1c82ecb069dfb71f639c09728cd2ce07c5e0a8c06ebb29d02dfd762c5"
+    },
+    {
+      "file": "src/evidence.cjs",
+      "sha256": "f5a348548253bf4742df9b02f1eea453833898b6e15e6a13f0e2087b17bf76d0"
+    },
+    {
+      "file": "src/files.cjs",
+      "sha256": "c82f4e216915ececeb0ba8fa704fd43b3149f08ff196e1afe3dd9f3501155175"
+    },
+    {
+      "file": "src/main.cjs",
+      "sha256": "e5fb9ae5e43ef6605cb4d3ed79a96b83f1ccbbf4252f3d33d3942113975fc3a8"
+    },
+    {
+      "file": "src/pipeline.cjs",
+      "sha256": "8eaa5706a084b2a932e2f497d6eaedb6e6a6ea16e7652503cd4ed87dae9b56e5"
+    },
+    {
+      "file": "src/policy.cjs",
+      "sha256": "d47390a6cd5cc40c48f7c6e871a65bd03685c4ec8eec36b07b304ae2951bc892"
+    },
+    {
+      "file": "src/preload.cjs",
+      "sha256": "bea2fbf6e5cd1aff7863122ccc70ab11cfed427c02733ba42612783b43733422"
+    },
+    {
+      "file": "src/report.cjs",
+      "sha256": "4fea9f2c438ccaeeb65646b38bc338c105e92121574731cd719f3a8a68738340"
+    },
+    {
+      "file": "src/rules/gitleaks.toml",
+      "sha256": "27630a96d6c55755cc37620f3933d5cab94b1eb78a726a32e11212972525d76e"
+    },
+    {
+      "file": "src/rules/security.yml",
+      "sha256": "8ac8044f668d8d7b2649d6aa1e5bd62abadbe10bfca1c24abe39d5f8337f7871"
+    },
+    {
+      "file": "src/security-mcp.mjs",
+      "sha256": "224543fbc9833dc49903d616933f7fdfc4d353143d828762dfaaa1e1b0da564e"
+    },
+    {
+      "file": "src/security.cjs",
+      "sha256": "d255e9d88260213551540ee40df13a7231a24bbd4cccca3cd9e20a1ccb16db9c"
+    },
+    {
+      "file": "src/server.cjs",
+      "sha256": "4372a0741d7a5826a9f2ddc7eeed2750d10cb61fd810be69bdaa20e5107430b5"
+    },
+    {
+      "file": "src/trust.cjs",
+      "sha256": "6fe9ca2aaf916013bd960384276cfd2efbe01b60d8a4f18e340a555fee79544f"
+    },
+    {
+      "file": "src/verify.cjs",
+      "sha256": "518564982e7603d85d130a129b0a580d53ab1c9fa4aeef1c250326ce4f3bd8e1"
+    },
+    {
+      "file": "ui/app.js",
+      "sha256": "2785af4499b17d7bca1449cc95a848fb378ad6f5e51a5ca1f8fdef51e4fc1742"
+    },
+    {
+      "file": "ui/fonts/OFL.txt",
+      "sha256": "27d9af34210253e7ca1251fbace86c6f65b40031d6ce1a75493a1b2093631298"
+    },
+    {
+      "file": "ui/fonts/VT323-Regular.ttf",
+      "sha256": "cf4de751ada78ceac033dbe16a687742939995b77bc2a052ae17a4957958594d"
+    },
+    {
+      "file": "ui/index.html",
+      "sha256": "20191b2e54d90504104981286f10d4cbae895125a0534de4e40565919bec1262"
+    },
+    {
+      "file": "ui/style.css",
+      "sha256": "42e9b747e1cdc3c8db98f4fa1f102940a3cfcaa920dba03cf8171430a5594279"
+    },
+    {
+      "file": "web/app.js",
+      "sha256": "63a70c5a46cdd8d07bd9ecc7d2b9240e443c9812070dbc9fb88578b4fc4a4539"
+    },
+    {
+      "file": "web/index.html",
+      "sha256": "a9f5fa5f3bda8577c2beef213bbad4ceadfb68939cefafc182dda9ec83475166"
+    },
+    {
+      "file": "web/style.css",
+      "sha256": "f7dd702da999a3925166e8fd2af639a33b98c98c1fde5c08d5ada76aab0ed08c"
+    },
+    {
+      "file": "demo/README.md",
+      "sha256": "0fc347d1ae99d7784d15bd57a6d4d159500ad3b1d0ee71016c878516b66c6bb0"
+    },
+    {
+      "file": "demo/app.py",
+      "sha256": "405e2938266f0a90a0caaeb8f272191743a5a5ab7d77e7aa10bb21500da1a631"
+    },
+    {
+      "file": "demo/format.js",
+      "sha256": "d57271e365b36d397bd0bab160a6dfba7eb7e38f588830bda747ffacc6d5dae0"
+    }
+  ]
 }

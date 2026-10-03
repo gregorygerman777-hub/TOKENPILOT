@@ -1,7 +1,9 @@
 {
   "name": "tokenpilot",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Local security evidence for Claude Code: scan files, inspect grouped findings, compare repairs and export reports without extra model calls.",
-  "author": {"name": "TokenPilot"},
+  "author": {
+    "name": "TokenPilot"
+  },
   "license": "MIT"
 }

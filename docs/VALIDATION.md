@@ -1,5 +1,14 @@
 # Validation record
 
+## Version 1.2.1
+
+- 41 automated tests passed, including real scanner and MCP integration tests.
+- Live browser flow passed sample scanning, findings, persisted history, exports, upload and error handling at four widths.
+- Installer integration passed checksum rejection before installation, actual app copy, paths with spaces, bundled CLI scanner detection, backup on reinstall and collision protection. Testing used an isolated prefix and did not alter the user shell profile.
+- Packaged Security Lab flow passed, including the local browser bridge. All source/backend, desktop UI, web UI and demo files match the packaged archive byte for byte.
+- No new paid-model savings benchmark or Docker execution was run. Previous benchmark limitations still apply.
+
+
 ## Version 1.2
 
 - 33 automated core, security, CI/export, HTTP and MCP integration tests passed. Real Semgrep and Gitleaks runs were included, with no skips on this Mac.
