@@ -4,7 +4,7 @@
 
 Created by Gregory German, freshman computer science student. 100% open source under the MIT license and free. Claude usage for repairs is billed by your own provider account.
 
-![Current TokenPilot arcade website](site/screens/website-v1.2.1.png)
+![Current TokenPilot arcade website](site/screens/arcade-overview.png)
 
 [Open the website](https://tokenpilot-lab.gregorygerman777.chatgpt.site/)
 
@@ -27,8 +27,6 @@ TokenPilot holds itself to two rules:
 
 ## How it works
 
-![TokenPilot 1.2.1 desktop Security Lab with a real sample scan](site/screens/security-lab-v1.2.1.png)
-
 ```mermaid
 flowchart LR
     T["Target<br/>local Git project"] --> S["Snapshot<br/>file hashes, commit"]
@@ -45,8 +43,6 @@ flowchart LR
 3. **Diagnose** turns each rule/file group into a repair brief: the enclosing function with line numbers, other references, related tests, the project's checks and a fix direction. No model call, and secret values never enter a brief.
 4. **Repair** starts a Claude Code session from the brief, with bounded tools, a compact system prompt and hard limits on tool calls, repeats, time and spend.
 5. **Verify** reruns the checks, rescans against the snapshot and applies a plain-code gate. It rejects remaining findings, new findings, suppression comments and edited tests.
-
-![A locally prepared repair brief in TokenPilot 1.2.1, before starting Claude](site/screens/repair-brief-v1.2.1.png)
 
 ## What makes it different
 
@@ -67,11 +63,17 @@ flowchart LR
 
 The 69.0% figure covers general coding tasks, not repairs of scanner findings. No savings number for repairs is claimed until the brief study has run.
 
-## Screens
+## Arcade website
 
-The browser workbench runs on your Mac and uses the same scanner backend and history as the desktop app.
+The website includes an illustrative sample walkthrough, real release downloads, installation instructions and creator information. The walkthrough is separate from the local scanning application.
 
-![TokenPilot 1.2.1 browser workbench showing a real sample scan](site/screens/web-workbench-v1.2.1.png)
+![Arcade sample walkthrough on the TokenPilot website](site/screens/arcade-sample.png)
+
+![Current TokenPilot installation section with the public installer command](site/screens/arcade-install.png)
+
+![Gregory German creator section on the TokenPilot website](site/screens/arcade-creator.png)
+
+The local browser workbench uses the same scanner backend and history as the desktop app. Its current interface is documented in [the workbench guide](docs/WEB.md).
 
 ## Tech stack
 
