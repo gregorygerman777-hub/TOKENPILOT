@@ -4,7 +4,13 @@
 
 Created by Gregory German, freshman computer science student. 100% open source under the MIT license and free. Claude usage for repairs is billed by your own provider account.
 
-![TokenPilot Security Lab scanning a demo project: 4 findings, 0 model tokens](site/screens/security-lab.png)
+![TokenPilot 1.2.1 Security Lab: real sample scan, 2 static findings and 0 model tokens](site/screens/security-lab.png)
+
+## Website
+
+![Current TokenPilot arcade website](site/screens/website.png)
+
+[Open the website](https://tokenpilot-lab.gregorygerman777.chatgpt.site/)
 
 ## Install on Mac (Apple Silicon)
 
@@ -42,7 +48,7 @@ flowchart LR
 4. **Repair** starts a Claude Code session from the brief, with bounded tools, a compact system prompt and hard limits on tool calls, repeats, time and spend.
 5. **Verify** reruns the checks, rescans against the snapshot and applies a plain-code gate. It rejects remaining findings, new findings, suppression comments and edited tests.
 
-![A repair brief handed to Claude in the desktop app](site/screens/repair-brief.png)
+![A locally prepared repair brief in TokenPilot 1.2.1, before starting Claude](site/screens/repair-brief.png)
 
 ## What makes it different
 
@@ -67,7 +73,7 @@ The 69.0% figure covers general coding tasks, not repairs of scanner findings. N
 
 The browser workbench runs on your Mac and uses the same scanner backend and history as the desktop app.
 
-![Browser workbench with 4 static findings on a demo project](site/screens/web-workbench.png)
+![TokenPilot 1.2.1 browser workbench showing a real sample scan](site/screens/web-workbench.png)
 
 ## Tech stack
 
